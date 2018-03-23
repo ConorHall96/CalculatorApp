@@ -1,28 +1,67 @@
+#TravisCI Details
 language: android
+sudo: false
+jdk: oraclejdk8
+
+before_cache:
+
+ - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+ - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+
+ directories:
+
+ - $HOME/.gradle/caches/
+
+ - $HOME/.gradle/wrapper/
+
+
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    # - tools
-    # - platform-tools
+  # Uncomment the lines below if you want to
+      # use the latest revision of Android SDK Tools
+     - tools
+     - tools
+     - build-tools-27.0.3
 
-    # The BuildTools version used by your project
-    - build-tools-26.0.2
+     - android-27
 
-    # The SDK version used to compile your project
-    - android-26
+     - android-$EMULATOR_API_LEVEL
 
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-26
+     - extra-google-m2repository
+     - extra-android-support
+     - extra-android-m2repository # for design library
 
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-26
-    - sys-img-armeabi-v7a-android-17
+     - extra-google-google_play_services
+
+     - sys-img-armeabi-v7a-android-27
+
+
+  licenses:
+
+     - android-sdk-preview-license-.+
+
+     - android-sdk-license-.+
+
+     - google-gdk-license-.+
 
 before_install:
-  -chmod +x gradlew
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - chmod +x gradlew
   - ./gradlew dependencies || true
+
+before_script:
+# - android list sdk --extended --no-ui --all
+ #- echo no | android create avd --force --name test --target android-27 --abi armeabi-v7a
+# - echo "n" | android create avd --name myandroid25 -t "android-25"
+ - android list targets
+ #- echo no | android create avd --force -n test -t android-25
+# - emulator -avd test -no-skin -no-audio -no-window &
+ #- android-wait-for-emulator
+# - adb shell input keyevent 82 &
+script: "./gradlew assembleDebug && ./gradlew lintDebug &&./gradlew testDebug"
+#after_success:
+ #  - ./gradlew jacocoTestReport coveralls
+
