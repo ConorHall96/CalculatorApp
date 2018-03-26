@@ -64,7 +64,7 @@ before_script:
 script: "./gradlew assembleDebug && ./gradlew lintDebug &&./gradlew testDebug"
 
 script:
-  - gradle clean check
+  - gradle check
 #after_success:
  #  - ./gradlew jacocoTestReport coveralls
 
