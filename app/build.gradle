@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:design:27.1.0'
     implementation files('libs/javaluator-3.0.1.jar')
-    implementation group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.7.5.201505241946'
+    implementation group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.7.4.201502262128'
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
