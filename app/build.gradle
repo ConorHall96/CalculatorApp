@@ -1,4 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: "jacoco"
+apply plugin: 'com.github.kt3k.coveralls'
+
+//jacocoTestReport {
+//    reports {
+//        xml.enabled = true // coveralls plugin depends on xml format report
+//        html.enabled = true
+//    }
+//}
 
 android {
     compileSdkVersion 27
@@ -15,6 +24,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled = true
         }
     }
     testOptions.unitTests.all {
