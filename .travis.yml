@@ -66,3 +66,11 @@ script: "./gradlew assembleDebug && ./gradlew lintDebug &&./gradlew testDebug"
 after_success:
 - ./gradlew jacocoTestReport coveralls
 
+addons:
+  sonarcloud:
+    organization: "conorhall96-github" # the key of the org you chose at step #3
+    token:
+      secure: b61bed167d6cbe48e8651887ca4a44d80360a6e6 # encrypted value of your token
+script:
+  # other script steps might be done before running the actual analysis
+  - sonar-scanner
