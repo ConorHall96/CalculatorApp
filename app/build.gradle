@@ -67,6 +67,7 @@ dependencies {
 sonarqube{
     properties{
         property "sonar.projectName", "CalculatorApp"
+        property "sonar.projectKey", "anubhav.calculatorapp"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.login", "b61bed167d6cbe48e8651887ca4a44d80360a6e6"
     }
