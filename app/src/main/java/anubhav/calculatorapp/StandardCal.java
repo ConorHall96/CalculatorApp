@@ -31,6 +31,10 @@ public class StandardCal extends AppCompatActivity {
         e2.setText("0");
     }
 
+    public int add(int num1, int num2) {
+        return num1 + num2;
+    }
+
     // Added by Conor Hall for Unit testing purposes.
     public String getE2() {
         return e2.getText().toString();
