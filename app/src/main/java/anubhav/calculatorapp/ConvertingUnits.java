@@ -7,54 +7,55 @@ package anubhav.calculatorapp;
 //Class to convert from one unit to SI unit
 public class ConvertingUnits
 {
+    //Static added by Conor Hall for testing purposes.
     //class to convert units of area
     static class Area{
-        public double sqMilliToMeter(double milli)
+        public static double sqMilliToMeter(double milli)
         {
             return (milli/1000000);
         }
 
-        public double sqMeterToMilli(double meter)
+        public static double sqMeterToMilli(double meter)
         {
             return (meter*1000000);
         }
 
-        public double sqCentiToMeter(double Centi)
+        public static double sqCentiToMeter(double Centi)
         {
             return (Centi/10000);
         }
 
-        public double sqMeterToCenti(double meter)
+        public static double sqMeterToCenti(double meter)
         {
             return (meter*10000);
         }
 
-        public double sqKiloToMeter(double Kilo)
+        public static double sqKiloToMeter(double Kilo)
         {
             return (Kilo*1000000);
         }
 
-        public double sqMeterToKilo(double meter)
+        public static double sqMeterToKilo(double meter)
         {
             return (meter/1000000);
         }
 
-        public double AcreToMeter(double acre)
+        public static double AcreToMeter(double acre)
         {
             return (acre*4046.86);
         }
 
-        public double sqMeterToAcre(double meter)
+        public static double sqMeterToAcre(double meter)
         {
             return (meter/4046.86);
         }
 
-        public double HectareToMeter(double Hectare)
+        public static double HectareToMeter(double Hectare)
         {
             return (Hectare*10000);
         }
 
-        public double sqMeterToHectare(double meter)
+        public static double sqMeterToHectare(double meter)
         {
             return (meter/10000);
         }

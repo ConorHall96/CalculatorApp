@@ -37,7 +37,8 @@ public class CalculateFactorial
 // res_size is size of res[] or number of digits in the number represented
 // by res[]. This function uses simple school mathematics for multiplication.
 // This function may value of res_size and returns the new value of res_size
-    private int multiply(int x, int r)
+    //Changed to public by Conor Hall for testing purposes.
+    public int multiply(int x, int r)
     {
         int carry = 0;  // Initialize carry
 
