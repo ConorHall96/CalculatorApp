@@ -1,9 +1,11 @@
 package anubhav.calculatorapp;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
@@ -15,9 +17,11 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
     @Test
-    public void multiplicationTest(View v) throws Exception {
+    public void multiplicationTest() throws Exception {
         StandardCal stdCal = new StandardCal();
-        Double Expected = 4.0;
+        LayoutInflater vi = (LayoutInflater) stdCal.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = vi.inflate(R.layout.activity_standard_cal, null);
+        String Expected = "4.0";
         v.setId(R.id.num2);
         stdCal.onClick(v);
         v.setId(R.id.multiply);
@@ -26,6 +30,6 @@ public class ExampleUnitTest {
         stdCal.onClick(v);
         v.setId(R.id.equal);
         stdCal.onClick(v);
-        assertEquals(Expected, ((Double) stdCal.getResult()));
+        assertEquals(Expected, stdCal.getE2());
     }
 }

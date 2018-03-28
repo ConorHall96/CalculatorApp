@@ -32,8 +32,8 @@ public class StandardCal extends AppCompatActivity {
     }
 
     // Added by Conor Hall for Unit testing purposes.
-    public double getResult() {
-        return result;
+    public String getE2() {
+        return e2.getText().toString();
     }
 
     public void onClick(View v)
@@ -239,7 +239,7 @@ public class StandardCal extends AppCompatActivity {
         }
     }
 
-    private void operationClicked(String op)
+    public void operationClicked(String op)
     {
         if(e2.length()!=0)
         {
