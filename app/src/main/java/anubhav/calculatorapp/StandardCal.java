@@ -31,6 +31,11 @@ public class StandardCal extends AppCompatActivity {
         e2.setText("0");
     }
 
+    // Added by Conor Hall for Unit testing purposes.
+    public double getResult() {
+        return result;
+    }
+
     public void onClick(View v)
     {
         switch(v.getId())
