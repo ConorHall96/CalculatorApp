@@ -1,14 +1,9 @@
 package anubhav.calculatorapp;
 
 import android.content.Context;
-import android.test.mock.MockContext;
 import android.view.LayoutInflater;
 import android.view.View;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.robolectric.RuntimeEnvironment;
-
 import static org.junit.Assert.*;
 
 /**
