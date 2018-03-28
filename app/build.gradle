@@ -70,7 +70,7 @@ sonarqube{
         property "sonar.projectKey", "anubhav.calculatorapp"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.language", "java"
-        property "sonar.sources", "src/main/java"
+        property "sonar.sources", "src"
         property "sonar.login", "b61bed167d6cbe48e8651887ca4a44d80360a6e6"
     }
 }
