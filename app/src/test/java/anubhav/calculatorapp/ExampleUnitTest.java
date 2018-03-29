@@ -34,4 +34,9 @@ public class ExampleUnitTest {
         calcFact.factorial(10);
         assertEquals(7,calcFact.getRes());
     }
+    @Test
+    public void test() throws Exception {
+        ExtendedDoubleEvaluator EDE = new ExtendedDoubleEvaluator();
+        assertThat(9.00,equalTo(EDE.evaluate("9")));
+    }
 }
