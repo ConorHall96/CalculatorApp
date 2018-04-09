@@ -77,5 +77,5 @@ script:
 
   deploy:
     provider: testfairy
-    api-key: b544a5f8f077449e2592ff54a1ec56141572e066
+    api-key: "b544a5f8f077449e2592ff54a1ec56141572e066"
     app-file: C:\Users\Conor\Desktop\Year4\DevOps\CalculatorApp\app\release\app-release.apk
