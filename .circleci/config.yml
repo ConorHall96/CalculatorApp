@@ -41,5 +41,11 @@ jobs:
       # run tests!
       - run: gradle test
 
-
+dependencies:
+  pre:
+    #- echo y | android update sdk --no-ui --all --filter "package-name"
+    - echo y | android update sdk --no-ui --all --filter build-tools-27.0.3
+    
+ override:
+    - sudo ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
