@@ -4,47 +4,33 @@ sudo: false
 jdk: oraclejdk8
 
 before_cache:
-
  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
 
  directories:
-
  - $HOME/.gradle/caches/
-
  - $HOME/.gradle/wrapper/
 
 
 android:
   components:
-  # Uncomment the lines below if you want to
-      # use the latest revision of Android SDK Tools
      - tools
      - tools
      - build-tools-27.0.3
-
      - android-27
-
      - android-$EMULATOR_API_LEVEL
-
      - extra-google-m2repository
      - extra-android-support
-     - extra-android-m2repository # for design library
-
+     - extra-android-m2repository
      - extra-google-google_play_services
-
      - sys-img-armeabi-v7a-android-27
 
 
   licenses:
-
      - android-sdk-preview-license-.+
-
      - android-sdk-license-.+
-
      - google-gdk-license-.+
 
 before_install:
@@ -83,9 +69,9 @@ script:
 #      repo: ConorHall96/CalculatorApp
 #      branch: master
 
-jobs:
-  include:
-      deploy: &heroku
-        provider: heroku
-        app: calculator-app-devops
-        api_key: 56f3e351-aa8b-4b61-8f08-fe0ef022c34c
+#jobs:
+#  include:
+#      deploy: &heroku
+#        provider: heroku
+#        app: calculator-app-devops
+#        api_key: 56f3e351-aa8b-4b61-8f08-fe0ef022c34c
