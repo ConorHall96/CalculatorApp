@@ -50,7 +50,7 @@ before_script:
 - echo "y" | android update sdk -a --no-ui --filter android-24
 - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-24
 - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
-- echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
+- echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
@@ -58,6 +58,7 @@ before_script:
 script:
 - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
 - sonar-scanner
+- ./gradlew jacocoTestReport coveralls
 
 addons:
   sonarcloud:
@@ -75,7 +76,6 @@ deploy:
     branch: master
     repo: ConorHall96/CalculatorApp
 after_success:
-- "./gradlew jacocoTestReport coveralls"
 - sh set_tags.sh
 
 notifications:
