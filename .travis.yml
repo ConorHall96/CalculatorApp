@@ -1,93 +1,35 @@
-#TravisCI Details
-#language: android
-#sudo: false
-#jdk: oraclejdk8
-#
-#before_cache:
-# - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-# - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-#
-#cache:
-#
-# directories:
-# - $HOME/.gradle/caches/
-# - $HOME/.gradle/wrapper/
-#
-#
-#android:
-#  components:
-#     - tools
-#     - tools
-#     - build-tools-27.0.3
-#     - android-27
-#     - android-$EMULATOR_API_LEVEL
-#     - extra-google-m2repository
-#     - extra-android-support
-#     - extra-android-m2repository
-#     - extra-google-google_play_services
-#     - sys-img-armeabi-v7a-android-27
-#
-#
-#  licenses:
-#     - android-sdk-preview-license-.+
-#     - android-sdk-license-.+
-#     - google-gdk-license-.+
-#
-#before_install:
-#  - mkdir "$ANDROID_HOME/licenses" || true
-#  - chmod +x gradlew
-#  - ./gradlew dependencies || true
-#
-#before_script:
-## - android list sdk --extended --no-ui --all
-# #- echo no | android create avd --force --name test --target android-27 --abi armeabi-v7a
-## - echo "n" | android create avd --name myandroid25 -t "android-25"
-# - android list targets
-# #- echo no | android create avd --force -n test -t android-27
-# - emulator -avd test -no-skin -no-audio -no-window &
-# - android-wait-for-emulator
-# - adb shell input keyevent 82 &
-#
-#script: "./gradlew assembleDebug && ./gradlew lintDebug &&./gradlew testDebug"
-
 language: android
 sudo: required
 jdk: oraclejdk8
-
 before_cache:
- - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
- - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
- directories:
- - $HOME/.gradle/caches/
- - $HOME/.gradle/wrapper/
-
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 env:
- global:
- - ANDROID_API=27
- - EMULATOR_API=27
- - ANDROID_BUILD_TOOLS=27.0.3
- - ADB_INSTALL_TIMEOUT=5 # minutes
-
+  global:
+  - ANDROID_API=27
+  - EMULATOR_API=27
+  - ANDROID_BUILD_TOOLS=27.0.3
+  - ADB_INSTALL_TIMEOUT=5
 android:
- components:
- - tools
- - platform-tools
- - build-tools-$ANDROID_BUILD_TOOLS
- - android-$ANDROID_API
- - android-$EMULATOR_API_LEVEL
- - extra-google-m2repository
- - extra-android-m2repository # for design library
- - addon-google_apis-google-25 # google play services
- - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
- - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
-
- licenses:
- - android-sdk-preview-license-.+
- - android-sdk-license-.+
- - google-gdk-license-.+
-
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API
+  - android-$EMULATOR_API_LEVEL
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-25
+  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+  - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
 before_install:
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -95,44 +37,34 @@ before_install:
 - chmod +x gradlew
 - echo y | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
 - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-- ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
-#Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
-
+- "./gradlew dependencies || true"
+notifications:
+  email: true
 before_script:
-- echo "y" | android update sdk -a --no-ui --filter android-24
-- echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-24
-- android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
+- echo "y" | android update sdk -a --no-ui --filter android-27
+- echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-27
+- android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}'
 - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
-
 script:
-- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace && ./gradlew connectedAndroidTest"
-
-after_success:
-- ./gradlew jacocoTestReport coveralls
-
+- sonar-scanner
 addons:
   sonarcloud:
-    organization: "conorhall96-github" # the key of the org you chose at step #3
+    organization: conorhall96-github
     token:
-      secure: b61bed167d6cbe48e8651887ca4a44d80360a6e6 # encrypted value of your token
-script:
-  # other script steps might be done before running the actual analysis
-  - sonar-scanner
-
-#deploy:
-#    provider: testfairy
-#    api-key: "b544a5f8f077449e2592ff54a1ec56141572e066"
-#    app-file: C:\Users\Conor\Desktop\Year4\DevOps\CalculatorApp\app\release\app-release.apk
-#    on:
-#      repo: ConorHall96/CalculatorApp
-#      branch: master
-
-#jobs:
-#  include:
-#      deploy: &heroku
-#        provider: heroku
-#        app: calculator-app-devops
-#        api_key: 56f3e351-aa8b-4b61-8f08-fe0ef022c34c
+      secure: b61bed167d6cbe48e8651887ca4a44d80360a6e6
+deploy:
+  provider: releases
+  api_key:
+    secure: nqvWG78MIUBHuGvi2ogGEtfywdO+5291JSqhiEW7iIQwOZvCHBtWyGUUbfjv8TtvHUtWhN4wF7goAfM82yhLRrREL+akOz6D408ihMwB0APn5MlVOInIT3o5qxZASQ10mt2lta13g1cJmO81yt73/O7MsKCRvJXtJ+tRoucijuuw+yVeVeA8ubl0ZvUb45Z8re9rwQ5Sr5hclsT+j9iDPUnqDtRv8QDRQM8Nj3xDSFvFCB9vVo82VDUWb55W2ewOeZkTc0lf5WeCMH1dZZBz0AhZQMSMqJ+YcCyqEhBzRFP8O26Kn/3YQSPQPlPj86Q2Xxm7FcnuYpKgT8sejfzjDY5cliLvzMExjIqm6FrtITBQbTQipeNwwN3k6WieckPYNclqEiKrWO/gnFLpA1VNhtlON7mAKzednyaNYbVvcAi71fBAZi1sSFaQrh+JyanZ2H82Nm/PrN1pHH9y8oIiX8UblVMK80nW78JvctB1Usgw0TNZFFVpf9/vCy+8GcIH/6oqOtr4P9gB0ywwt/MVJdSm5kMzUQM+xgxDxPthgbquJHpSqlZVBWEkJP4zOfMMfgz1d8WJw4oQ1YkIiQGu3xlXbqKufaQ15WxFG2F2PapzImOvGgkrOuqg+MkfVsI76N3/7hqaHGSsAYYyT1oIlesshP0CO3wz0vI7VqPdMkc=
+  file: app/release/app-release.apk
+  file_glob: "true"
+  skip_cleanup: true
+  on:
+    branch: master
+    repo: ConorHall96/CalculatorApp
+after_success:
+- "./gradlew jacocoTestReport coveralls"
+- sh set_tags.sh
