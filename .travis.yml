@@ -56,12 +56,10 @@ before_script:
 - adb shell input keyevent 82 &
 
 script:
-- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
-
-notifications:
-  email: true
-script:
+- ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
+- ./gradlew connectedAndroidTest
 - sonar-scanner
+
 addons:
   sonarcloud:
     organization: conorhall96-github
@@ -80,6 +78,9 @@ deploy:
 after_success:
 - "./gradlew jacocoTestReport coveralls"
 - sh set_tags.sh
+
+notifications:
+  email: true
 
 #Sources
 #https://github.com/travis-ci/travis-ci/issues/8188
