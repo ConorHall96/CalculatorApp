@@ -80,3 +80,7 @@ deploy:
 after_success:
 - "./gradlew jacocoTestReport coveralls"
 - sh set_tags.sh
+
+#Sources
+#https://github.com/travis-ci/travis-ci/issues/8188
+#http://szagurskii.com/blog/how-to-deploy-apk-to-github-releases-with-travis-ci/
