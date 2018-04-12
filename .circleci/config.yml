@@ -46,6 +46,6 @@ dependencies:
     #- echo y | android update sdk --no-ui --all --filter "package-name"
     #- echo y | android update sdk --no-ui --all --filter build-tools-27.0.3
     
- override:
+  override:
     - sudo ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
