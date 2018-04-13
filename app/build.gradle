@@ -49,7 +49,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:0.4.1'
 }
 
-sonarqube {
+sonarqube{
     properties {
         property "sonar.projectName", "CalculatorApp"
         property "sonar.projectKey", "anubhav.calculatorapp"
@@ -62,9 +62,9 @@ sonarqube {
 
 task jacocoTestReport(overwrite: true, type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
     reports {
-        xml.enabled false
-        //xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
-        html.destination file("${buildDir}/jacocoHtml")
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+        html.destination file("${buildDir}/reports/coverage")
     }
     executionData = files "${buildDir}/jacoco/testDebugUnitTest.exec"
     sourceDirectories = files android.sourceSets.main.java.srcDirs
