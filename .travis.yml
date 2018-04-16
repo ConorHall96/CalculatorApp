@@ -1,41 +1,35 @@
 language: android
 sudo: required
 jdk: oraclejdk8
-
 before_cache:
- - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
- - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
- directories:
- - $HOME/.gradle/caches/
- - $HOME/.gradle/wrapper/
-
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 env:
- global:
- - ANDROID_API=25
- - EMULATOR_API=24
- - ANDROID_BUILD_TOOLS=25.0.2
- - ADB_INSTALL_TIMEOUT=5 # minutes
-
+  global:
+  - ANDROID_API=25
+  - EMULATOR_API=24
+  - ANDROID_BUILD_TOOLS=25.0.2
+  - ADB_INSTALL_TIMEOUT=5
 android:
- components:
- - tools
- - platform-tools
- - build-tools-$ANDROID_BUILD_TOOLS
- - android-$ANDROID_API
- - android-$EMULATOR_API_LEVEL
- - extra-google-m2repository
- - extra-android-m2repository # for design library
- - addon-google_apis-google-25 # google play services
- - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
- - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL # the fix!
-
- licenses:
- - android-sdk-preview-license-.+
- - android-sdk-license-.+
- - google-gdk-license-.+
-
+  components:
+  - tools
+  - platform-tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API
+  - android-$EMULATOR_API_LEVEL
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-25
+  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+  - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
 before_install:
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -43,23 +37,19 @@ before_install:
 - chmod +x gradlew
 - echo y | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
 - echo y | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-- ./gradlew dependencies || true # DON'T ADD unless you are getting "Install missing components using SDK manager"
-#Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
-
+- "./gradlew dependencies || true"
 before_script:
 - echo "y" | android update sdk -a --no-ui --filter android-21
 - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-21
-- android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
+- android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}'
 - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
-
 script:
-- ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
+- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
 - sonar-scanner
-- ./gradlew jacocoTestReport coveralls
-
+- "./gradlew jacocoTestReport coveralls"
 addons:
   sonarcloud:
     organization: conorhall96-github
@@ -70,17 +60,18 @@ deploy:
   api_key:
     secure: nqvWG78MIUBHuGvi2ogGEtfywdO+5291JSqhiEW7iIQwOZvCHBtWyGUUbfjv8TtvHUtWhN4wF7goAfM82yhLRrREL+akOz6D408ihMwB0APn5MlVOInIT3o5qxZASQ10mt2lta13g1cJmO81yt73/O7MsKCRvJXtJ+tRoucijuuw+yVeVeA8ubl0ZvUb45Z8re9rwQ5Sr5hclsT+j9iDPUnqDtRv8QDRQM8Nj3xDSFvFCB9vVo82VDUWb55W2ewOeZkTc0lf5WeCMH1dZZBz0AhZQMSMqJ+YcCyqEhBzRFP8O26Kn/3YQSPQPlPj86Q2Xxm7FcnuYpKgT8sejfzjDY5cliLvzMExjIqm6FrtITBQbTQipeNwwN3k6WieckPYNclqEiKrWO/gnFLpA1VNhtlON7mAKzednyaNYbVvcAi71fBAZi1sSFaQrh+JyanZ2H82Nm/PrN1pHH9y8oIiX8UblVMK80nW78JvctB1Usgw0TNZFFVpf9/vCy+8GcIH/6oqOtr4P9gB0ywwt/MVJdSm5kMzUQM+xgxDxPthgbquJHpSqlZVBWEkJP4zOfMMfgz1d8WJw4oQ1YkIiQGu3xlXbqKufaQ15WxFG2F2PapzImOvGgkrOuqg+MkfVsI76N3/7hqaHGSsAYYyT1oIlesshP0CO3wz0vI7VqPdMkc=
   file: app/release/app-release.apk
-  file_glob: "true"
+  file_glob: 'true'
   skip_cleanup: true
   on:
     branch: master
     repo: ConorHall96/CalculatorApp
 after_success:
 - sh set_tags.sh
-
 notifications:
-  email: true
-
-#Sources
-#https://github.com/travis-ci/travis-ci/issues/8188
-#http://szagurskii.com/blog/how-to-deploy-apk-to-github-releases-with-travis-ci/
+  slack:
+    secure: Tf8JTLGeXOVw/B5HT309v8mmG5aiKabIeCYHlqyZUgVsACHB40UDDVNh4LaC+jRwr2IxFaZ+EmyVmIWoQkNUQagJjcC/DbqSlb+XAiv08H8H7st5A7Wn97vg6Q7K3iqs8OZMe/KitWr0+d4K+NobeHcchLV4/2XjWDItVxZilwaKD9vISzWJUpHZRDZJSqoCzeKGOeA97nLXtpXg7VR7/mXwBmikKMevNd4LyhHZ1LwmEbI5b02WSUtZZIusNNXicXuLlSxCM2CoJId5TwgWU1/vKBRcBsVCeDXLoWFFOkz7IbZG6vSMkc/MU6aOGBWckuSQzPttbdMJldIgHuQj4dQ74AccKyIG86QLvWgv3gnUkYibD/eTOk0bsvfC7cLQti6y4ppyPPlbQP7Tzl2w2/uhPodMx75zMXGxvxzo+mjkz/yo2jST7ceRTsCeN61E5osZ493+MSH4LyVMJufBG0bv2zagVtw1zUobcYMRD0DlpuFVOH0IuqQvRMUCVOqtAXOBMsNsrJl6EtSnzn3vwAYfxdCNy/Zn7t6MbUknvt11sIYNr4PJE6mgIHaPaMa6MQ6SOHaG7be1KmiGKdQeKwPTsd2/LQvrq381yaJWZs4sdp0tYiy9H4B1kvKeDBjvXHu7l55XlPQNE9GAUQHjeljkSx8bB2wmy/+CE7TIk9Y=
+  email:
+    recipients:
+    - conorhall.96@gmail.com
+    on_success: never
+    on_failure: always
