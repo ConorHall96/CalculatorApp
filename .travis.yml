@@ -69,7 +69,8 @@ after_success:
 - sh set_tags.sh
 notifications:
   slack:
-    secure: Tf8JTLGeXOVw/B5HT309v8mmG5aiKabIeCYHlqyZUgVsACHB40UDDVNh4LaC+jRwr2IxFaZ+EmyVmIWoQkNUQagJjcC/DbqSlb+XAiv08H8H7st5A7Wn97vg6Q7K3iqs8OZMe/KitWr0+d4K+NobeHcchLV4/2XjWDItVxZilwaKD9vISzWJUpHZRDZJSqoCzeKGOeA97nLXtpXg7VR7/mXwBmikKMevNd4LyhHZ1LwmEbI5b02WSUtZZIusNNXicXuLlSxCM2CoJId5TwgWU1/vKBRcBsVCeDXLoWFFOkz7IbZG6vSMkc/MU6aOGBWckuSQzPttbdMJldIgHuQj4dQ74AccKyIG86QLvWgv3gnUkYibD/eTOk0bsvfC7cLQti6y4ppyPPlbQP7Tzl2w2/uhPodMx75zMXGxvxzo+mjkz/yo2jST7ceRTsCeN61E5osZ493+MSH4LyVMJufBG0bv2zagVtw1zUobcYMRD0DlpuFVOH0IuqQvRMUCVOqtAXOBMsNsrJl6EtSnzn3vwAYfxdCNy/Zn7t6MbUknvt11sIYNr4PJE6mgIHaPaMa6MQ6SOHaG7be1KmiGKdQeKwPTsd2/LQvrq381yaJWZs4sdp0tYiy9H4B1kvKeDBjvXHu7l55XlPQNE9GAUQHjeljkSx8bB2wmy/+CE7TIk9Y=
+      rooms:
+        - devopsprojecttravis:ceuCY6cAw2E3YMMoYJuL3jvY#general
   email:
     recipients:
     - conorhall.96@gmail.com
