@@ -65,8 +65,8 @@ deploy:
   on:
     branch: master
     repo: ConorHall96/CalculatorApp
-after_success:
-- sh set_tags.sh
+#after_success:
+#- sh set_tags.sh
 notifications:
   slack:
       rooms:

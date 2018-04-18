@@ -45,7 +45,7 @@ public class StandardCal extends AppCompatActivity {
         switch(v.getId())
         {
             case R.id.num0:
-                e2.setText(e2.getText()+"0");
+                e2.setText(e2.getText()+"1");
                 break;
 
             case R.id.num1:
