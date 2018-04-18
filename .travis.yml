@@ -65,12 +65,14 @@ deploy:
   on:
     branch: master
     repo: ConorHall96/CalculatorApp
-#after_success:
-#- sh set_tags.sh
+after_success:
+- sh set_tags.sh
 notifications:
   slack:
       rooms:
         - devopsprojecttravis:ceuCY6cAw2E3YMMoYJuL3jvY#general
+      on_success: always
+      on_failure: never
   email:
     recipients:
     - conorhall.96@gmail.com
