@@ -31,7 +31,7 @@ allprojects {
         properties {
             property "sonar.language", "java"
             property "sonar.sources", "src/main"
-            property "sonar.jacoco.reportPath","build/outputs/code-coverage/connected/coverage.ec"
+            property "sonar.jacoco.reportPath","${buildDir}/reports/jacoco/test/jacocoTestReport.xmlc"
         }
     }
 }
