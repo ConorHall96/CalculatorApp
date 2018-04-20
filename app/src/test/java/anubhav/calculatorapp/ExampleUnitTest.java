@@ -39,4 +39,11 @@ public class ExampleUnitTest {
         ExtendedDoubleEvaluator EDE = new ExtendedDoubleEvaluator();
         assertThat(9.00,equalTo(EDE.evaluate("9")));
     }
+
+   //@Test
+   //public void testAdd() throws Exception {
+   //    StandardCal SC = new StandardCal();
+   //    View v = new View();
+   //    assertThat(9.00,equalTo(SC.onClick(v)));
+   //}
 }
