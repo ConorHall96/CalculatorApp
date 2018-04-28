@@ -7,7 +7,7 @@ package anubhav.calculatorapp;
 //Class to convert from one unit to SI unit
 public class ConvertingUnits
 {
-    //Static added by Conor Hall for testing purposes.
+    //Static added by Conor Hall for testing purposes with DevOps project.
     //class to convert units of area
     static class Area{
         public static double sqMilliToMeter(double milli)
